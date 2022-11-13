@@ -2,8 +2,18 @@
 <?php 
     require_once 'config/connect.php';
 
-    $goods = mysqli_query($connect,"SELECT * FROM `goods`");
-    $goods = mysqli_fetch_all($goods);
+    $goods = pg_query($connect,"SELECT * FROM users");
+
+    $goods = pg_fetch_all($goods);
+
+    usort($goods,fn($a,$b)=> $a['id'] - $b['id']);
+    
+
+    pg_close($connect);
+
+   
+
+
 
 
 
@@ -36,13 +46,13 @@
     foreach($goods as $item){
         ?>        
             <tr>
-                <td> <?=  $item[0] ?> </td>
-                <td> <?=  $item[1]  ?></td>
-                <td> <?=  $item[2] ?></td>
-                <td> <?=  $item[3]  ?></td>
-                <td><a method="GET" href="vendor/update.php?id=<?=  $item[0] ?>">Обновить</a></td>          
-                <td><a method="GET" href="vendor/delete.php?id=<?=  $item[0] ?>">Удалить</a></td>  
-                <td><a method="GET" href="vendor/view.php?id=<?=  $item[0] ?>">Просмотр</a></td>         
+                <td> <?=  $item['id'] ?> </td>
+                <td> <?=  $item['title']  ?></td>
+                <td> <?=  $item['description'] ?></td>
+                <td> <?=  $item['price']  ?></td>
+                <td><a method="GET" href="vendor/update.php?id=<?=  $item['id'] ?>">Обновить</a></td>          
+                <td><a method="GET" href="vendor/delete.php?id=<?=  $item['id'] ?>">Удалить</a></td>  
+                <td><a method="GET" href="vendor/view.php?id=<?=  $item['id'] ?>">Просмотр</a></td>         
             </tr>
              <br>    
         <?php   

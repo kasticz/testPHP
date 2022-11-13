@@ -9,6 +9,12 @@ require_once '../config/connect.php';
         $description = 'Описания нет';
     };
     $price = $_POST['price'];
-    mysqli_query($connect,"UPDATE `goods` SET `title` = '$title',`description` = '$description', `price` = '$price' WHERE `id` = '$id'");
+
+    echo $id,$title,$description,$price;
+    pg_query($connect,"UPDATE users SET title = '$title',description = '$description', price = '$price' WHERE id = '$id'");
+
 
     header('Location:../index.php');
+
+    
+    pg_close($connect);

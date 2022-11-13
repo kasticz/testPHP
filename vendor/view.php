@@ -2,12 +2,15 @@
     require_once '../config/connect.php';
     $id = $_GET['id'];
     
-    $good = mysqli_query($connect,"SELECT * FROM `goods` WHERE `id` = $id");
+    $good = pg_query($connect,"SELECT * FROM users WHERE id = $id");
 
-    $good = mysqli_fetch_assoc($good);
+    $good = pg_fetch_assoc($good);
 
-    $comments = mysqli_query($connect,"SELECT `comment` FROM `comments`  as `c` LEFT JOIN `goods` as `g` ON g.id = c.good_id WHERE g.id = $id" );
-    $comments = mysqli_fetch_all($comments);
+
+    $comments = pg_query($connect,"SELECT comment FROM comments  as c LEFT JOIN users as u ON u.id = c.user_id WHERE u.id = '$id'" );
+    $comments = pg_fetch_all($comments);
+    
+    pg_close($connect);
 
 ?>
 
@@ -27,7 +30,7 @@
     <h3>Цена: <?= $good['price']?> </h3>
     <hr>
     <form action="addComment.php" method="POST">
-        <input value="<?= $id ?>" name="id"" type="hidden">
+        <input value="<?= $id ?>" name="user_id"" type="hidden">
         <textarea name="comment" cols="35" rows="10"></textarea>
         <br>
         <input value="Отправить" type="submit">        
@@ -37,7 +40,7 @@
     <ul><?php 
     foreach($comments as $comment){
         ?>
-        <li><?= $comment[0] ?></li>
+        <li><?= $comment['comment'] ?></li>
         <?php        
     }
     ?></ul>

@@ -2,9 +2,13 @@
     require_once '../config/connect.php';
     $id = $_GET['id'];
     
-    $good = mysqli_query($connect,"SELECT * FROM `goods` WHERE `id` = $id");
+    $good = pg_query($connect,"SELECT * FROM users WHERE id = $id");
 
-    $good = mysqli_fetch_assoc($good);
+    $good = pg_fetch_assoc($good);
+    
+    pg_close($connect);
+
+
 
 ?>
 

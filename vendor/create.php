@@ -8,6 +8,10 @@ require_once '../config/connect.php';
         $description = 'Описания нет';
     };
     $price = $_POST['price'];
-    mysqli_query($connect,"INSERT INTO `goods` (`id`,`title`,`description`,`price`) VALUES (NULL,'$title','$description','$price') ");
+
+    pg_insert($connect, "users",$_POST);
 
     header('Location:../index.php');
+
+    
+    pg_close($connect);

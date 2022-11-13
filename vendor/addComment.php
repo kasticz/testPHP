@@ -2,12 +2,12 @@
 <?php
 require_once '../config/connect.php';
 
-    $id = $_POST['id'];
-    $comment = $_POST['comment'];
+    $id = $_POST['user_id'];
 
 
-    mysqli_query($connect,"INSERT INTO `comments` (`id`,`good_id`,`comment`) VALUES (NULL,'$id','$comment') ");
-
+    pg_insert($connect,"comments",$_POST);
+    pg_close($connect);
   
 
     header("Location:../vendor/view.php?id=$id");
+    
